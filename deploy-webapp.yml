@@ -5,6 +5,18 @@ metadata:
     name: cloudnative-webapp
 ---
 apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  namespace: cloudnative-webapp
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+---
+apiVersion: v1
 kind: Service
 metadata:
   name: php
@@ -34,6 +46,20 @@ spec:
     app: nginx
     tier: web
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: cloudnative-webapp
+  labels:
+    tier: database
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: mysql
+    tier: database
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -55,7 +81,7 @@ spec:
     spec:
       containers:
       - name: php
-        image: lhr.ocir.io/apaccpt01/php-webapp:0.1
+        image: lhr.ocir.io/apaccpt01/php-webapp:0.10
         ports:
         - containerPort: 9000
       imagePullSecrets:
@@ -87,3 +113,58 @@ spec:
         - containerPort: 5000
       imagePullSecrets:
       - name: ocir-secret
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: cloudnative-webapp
+  labels:
+    tier: database
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+      tier: database
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+        tier: database
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysqlrootpassword
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysqldatabase
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysqluser
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysqlpassword
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
