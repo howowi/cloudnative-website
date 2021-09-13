@@ -68,6 +68,7 @@ steps:
     name: "Execute accessibility test"
     command: |
       docker ps -a
+      docker logs nginx-php
       docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nginx-php
       docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' php-webapp
       echo "Execute Pa11y test"
