@@ -81,7 +81,23 @@ spec:
     spec:
       containers:
       - name: php
-        image: lhr.ocir.io/apaccpt01/php-webapp:0.10
+        image: lhr.ocir.io/apaccpt01/php-webapp:${BUILDRUN_HASH}
+        env:
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysqldatabase
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysqluser
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysqlpassword
         ports:
         - containerPort: 9000
       imagePullSecrets:
@@ -108,7 +124,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: lhr.ocir.io/apaccpt01/nginx-php:0.2
+        image: lhr.ocir.io/apaccpt01/nginx-php:${BUILDRUN_HASH}
         ports:
         - containerPort: 5000
       imagePullSecrets:
