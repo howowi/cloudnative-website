@@ -60,6 +60,12 @@ div.check {
     margin: auto;
     text-align: center;
 }
+#version {
+    width: 400px;
+    margin: auto;
+    font: 12px Courier;
+    text-align: center;
+}
 
 </style>
 <script>
@@ -87,10 +93,10 @@ function changeCookie() {
 <p id="body_title"> Please fill in the form</p>
 <div class="info">
 <form method="post" action="process.php">
-Name : <input type="text" name="user_name" placeholder="Enter Your Name" /><br />
-Email : <input type="email" name="user_email" placeholder="Enter Your Email" /><br />
+Name : <input type="text" aria-label="name" name="user_name" placeholder="Enter Your Name" /><br />
+Email : <input type="email" aria-label="email" name="user_email" placeholder="Enter Your Email" /><br />
 Message : <textarea name="user_text"></textarea><br />
-<input type="submit" value="Submit" />
+<input type="submit" aria-label="message" value="Submit" />
 </form>
 </div>
 <div class="check"><input aria-label="refresh" type="checkbox" id="check" onchange="changeCookie()"> Auto Refresh</div>
@@ -98,6 +104,6 @@ Message : <textarea name="user_text"></textarea><br />
             &copy; Oracle. 2021
         </div>
 <p id="center"> <?php echo 'Current PHP version: ' . phpversion(); ?> </p>
-<p id="center"> Current web version 1.1 </p>
+<p id="version"> Current web version 1.1 </p>
 </body>
 </html>
