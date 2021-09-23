@@ -131,8 +131,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//Check it is comming from a form
 </div>
 
 <div id="center">
-            &copy; Oracle. 2021
+<p> &copy; Oracle. 2021 </p>
+<p> <?php echo 'PHP version: ' . phpversion(); ?> </p>
+<p> Software version: 0.5  </p>
 </div>
-<p id="center"> <?php echo 'PHP version: ' . phpversion(); ?> </p>
-<p id="center"> Software version: 0.5 </p>
+
 </body>
+</html>
