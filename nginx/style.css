@@ -10,8 +10,9 @@ div.info {
     background-color: #1fccdf;
     padding: 20px;
     margin-bottom: 100px;
-    margin-left: 100px;
-    margin-right: 100px;
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-top: 30px;
 }
 
 img {
@@ -24,17 +25,6 @@ div.smaller p span {
 }
 h1, h2 {
     font-weight: 100;
-}
-div.check {
-    padding: 0px 0px 0px 0px;
-    display: table;
-    margin: 36px auto auto auto;
-    font: 12px 'RobotoRegular', Arial, sans-serif;
-}
-#footer {
-    position: fixed;
-    bottom: 36px;
-    width: 100%;
 }
 #center {
     position: fixed;
@@ -50,18 +40,7 @@ div.check {
 #body_title {
     width: 400px;
     margin: auto;
-    text-align: center;
-}
-#version {
-    width: 400px;
-    margin: auto;
-    font: 12px Courier;
-    text-align: center;
-}
-#php_version {
-    width: 400px;
-    margin: auto;
-    font: 12px Courier;
+    margin-top: 10px;
     text-align: center;
 }
 
@@ -137,4 +116,22 @@ input[type=text], select {
   /* Add a background color to the submit button on mouse-over */
   input[type=submit]:hover {
     background-color: #45a049;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 80%;
+    border: 1px solid #ddd;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 16px;
+  }
+  
+  tr:nth-child(odd) {
+    background-color: #f2f2f2;
   }
